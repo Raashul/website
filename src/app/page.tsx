@@ -29,7 +29,7 @@ export default function Home() {
         </p>
         <div className="flex gap-6">
           <a
-            href="/photos/about1.png"
+            href="/photos/about1.jpg"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors"
@@ -37,7 +37,7 @@ export default function Home() {
             Expresso Martini + Vibe Coding during Christmas week. 
           </a>
           <a
-            href="/photos/about2.png"
+            href="/photos/about2.jpg"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors"
