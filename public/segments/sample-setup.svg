@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+  <rect width="600" height="300" rx="12" fill="#1a1a2e"/>
+  <text x="30" y="40" font-family="monospace" font-size="14" fill="#7f8c9b">~ terminal</text>
+  <text x="30" y="80" font-family="monospace" font-size="14" fill="#50fa7b">$ </text>
+  <text x="50" y="80" font-family="monospace" font-size="14" fill="#f8f8f2">vim content/segments/new-post.mdx</text>
+  <text x="30" y="110" font-family="monospace" font-size="14" fill="#50fa7b">$ </text>
+  <text x="50" y="110" font-family="monospace" font-size="14" fill="#f8f8f2">git add . &amp;&amp; git push</text>
+  <text x="30" y="140" font-family="monospace" font-size="14" fill="#8be9fd">Deploying...</text>
+  <text x="30" y="170" font-family="monospace" font-size="14" fill="#50fa7b">✓ Live in 12s</text>
+  <text x="30" y="220" font-family="monospace" font-size="13" fill="#6272a4">// that's the whole workflow</text>
+</svg>
