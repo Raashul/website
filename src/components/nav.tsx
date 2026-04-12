@@ -7,10 +7,10 @@ import { useState } from "react";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
-  { href: "/segments", label: "Segments" },
   { href: "/reading", label: "Reading" },
   { href: "/working-on", label: "Working On" },
+  { href: "/segments", label: "Segments" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export function Nav() {

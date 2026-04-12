@@ -2,23 +2,23 @@ export default function Home() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16 md:py-14">
       <div className="mb-12">
-        <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-6">
-          I&apos;m Rashul.
-        </h1>
-        <div className="space-y-5 text-lg leading-relaxed text-[var(--foreground-muted)]">
+        <div className="space-y-5 text-base leading-relaxed text-[var(--foreground-muted)]">
           <p>
-            Yes. I vibe-coded this website. 
+            Yes. This is a vibe coded website.  
           </p>
           <p>
-            I use this site to keep my thoughts organized. If I learn something interesting, I'll dump it here. If I find something cool, I'll dump it here. Its X meets Medium meets Linked(lol jk never linkedin).
+            I&apos;ll use this site to dump my thoughts. It&apos;ll be my online dictionary to save my random thoughts, finds and the ocasional insight. 
           </p>
 
-          <p>If you're new here, my goal is to allow me to get you to know me more than a 1 pager resume. </p>
+          <p>If you&apos;re new here, my goal is to get you to know me better than a 1 pager resume. </p>
 
           <p>
-            I'm orginally from Nepal. But I'm currently based in Arlington, VA. I work in tech. I currently build software for an aviation company for my 9 to 5, but like to dabble on the side.
+            I&apos;m orginally from Nepal. <br/> 
+            I came to the <a href="/photos/about3.png" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">United States in 2015</a> for my undergrad in <a href="https://www.caldwell.edu/" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">Caldwell University</a><br/>
+            I&apos;m currently based in Arlington, Virginia <br/>
+            I work in tech where I build software for an <a href="https://www.anratechnologies.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">aviation company</a> for my 9 to 5, but like to dabble on the side.
           </p>
-
+         
 
         </div>
       </div>
@@ -34,7 +34,7 @@ export default function Home() {
             rel="noopener noreferrer"
             className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors"
           >
-            Expresso Martini + Vibe Coding during Christmas week. 
+            Expresso Martini action
           </a>
           <a
             href="/photos/about2.jpg"
@@ -71,18 +71,16 @@ export default function Home() {
         <div>
           <h2 className="font-serif text-xl mb-3">Get in touch</h2>
           <p className="text-[var(--foreground-muted)] leading-relaxed">
-            I&apos;m always happy to chat. Find me on{" "}
             <a
-              href="https://twitter.com"
+              href="https://x.com/RashulRjb"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors"
             >
               Twitter
             </a>{" "}
-            or{" "}
             <a
-              href="https://github.com"
+              href="https://github.com/Raashul/website"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors"

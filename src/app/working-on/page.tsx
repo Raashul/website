@@ -13,9 +13,6 @@ export default function WorkingOnPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-5">
-      <h1 className="font-serif text-3xl md:text-4xl tracking-tight mb-2">
-        Working On
-      </h1>
       <p className="text-[var(--foreground-muted)] mb-8">
         What I&apos;m building now and everything I&apos;ve built before.
       </p>
@@ -30,9 +27,14 @@ export default function WorkingOnPage() {
                   href={current.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-serif text-xl mb-3 block hover:text-[var(--color-accent)] transition-colors cursor-pointer"
+                  className="font-serif text-xl mb-3 inline-flex items-center gap-2 hover:text-[var(--color-accent)] transition-colors cursor-pointer"
                 >
                   {current.title}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
                 </a>
               ) : (
                 <h2 className="font-serif text-xl mb-3">{current.title}</h2>
@@ -68,9 +70,14 @@ export default function WorkingOnPage() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium hover:text-[var(--color-accent)] transition-colors cursor-pointer"
+                        className="font-medium inline-flex items-center gap-2 hover:text-[var(--color-accent)] transition-colors cursor-pointer"
                       >
                         {project.title}
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <polyline points="15 3 21 3 21 9" />
+                          <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
                       </a>
                     ) : (
                       <h3 className="font-medium">{project.title}</h3>

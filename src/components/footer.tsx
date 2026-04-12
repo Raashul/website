@@ -5,7 +5,7 @@ export function Footer() {
         <span>&copy; {new Date().getFullYear()} Rashul</span>
         <div className="flex gap-4">
           <a
-            href="https://github.com"
+            href="https://github.com/Raashul"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[var(--foreground)] transition-colors"
@@ -13,7 +13,7 @@ export function Footer() {
             GitHub
           </a>
           <a
-            href="https://twitter.com"
+            href="https://x.com/RashulRjb"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[var(--foreground)] transition-colors"

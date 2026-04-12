@@ -62,7 +62,7 @@ export default function SegmentsPage() {
                   </span>
                 )}
               </div>
-              <div className="prose leading-relaxed">
+              <div className="prose text-sm leading-relaxed">
                 <MDXRemote source={segment.content} />
               </div>
             </div>
