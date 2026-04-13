@@ -14,7 +14,7 @@ export default function Home() {
 
           <p>
             I&apos;m orginally from Nepal. <br/> 
-            I came to the <a href="/photos/about3.png" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">United States in 2015</a> for my undergrad in <a href="https://www.caldwell.edu/" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">Caldwell University</a><br/>
+            I came to the <a href="/photos/about3.png" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">United States in 2015</a> for my undergrad <br/>
             I&apos;m currently based in Arlington, Virginia <br/>
             I work in tech where I build software for an <a href="https://www.anratechnologies.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">aviation company</a> for my 9 to 5, but like to dabble on the side.
           </p>

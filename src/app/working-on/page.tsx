@@ -17,7 +17,7 @@ export default function WorkingOnPage() {
         What I&apos;m building now and everything I&apos;ve built before.
       </p>
 
-      <Tabs tabs={["Currently working on", "History"]}>
+      <Tabs tabs={["Currently working on", "History", "Education"]}>
         {/* Currently working on */}
         <div>
           {current ? (
@@ -40,7 +40,16 @@ export default function WorkingOnPage() {
                 <h2 className="font-serif text-xl mb-3">{current.title}</h2>
               )}
               <div className="prose leading-relaxed">
-                <MDXRemote source={current.content} />
+                <MDXRemote
+                  source={current.content}
+                  components={{
+                    img: (props) => (
+                      <a href={props.src} target="_blank" rel="noopener noreferrer">
+                        <img {...props} className="cursor-pointer hover:opacity-80 transition-opacity" />
+                      </a>
+                    ),
+                  }}
+                />
               </div>
             </div>
           ) : (
@@ -101,6 +110,61 @@ export default function WorkingOnPage() {
               ))}
             </div>
           )}
+        </div>
+
+        {/* Education */}
+        <div>
+          <div className="relative border-l-2 border-[var(--border)] ml-2">
+            <div className="relative pl-8 pb-10">
+              <div className="absolute left-[-5px] top-1 w-2 h-2 rounded-full bg-[var(--foreground-muted)]" />
+              <div className="text-sm text-[var(--foreground-muted)] mb-1">
+                2022 - 2024
+              </div>
+              <div className="flex items-center gap-3 mb-1">
+                <a
+                  href="https://www.gmu.edu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium inline-flex items-center gap-2 hover:text-[var(--color-accent)] transition-colors cursor-pointer"
+                >
+                  George Mason University
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+              <p className="text-sm text-[var(--foreground-muted)]">
+                Masters in Science, Computer Science
+              </p>
+            </div>
+
+            <div className="relative pl-8 pb-0">
+              <div className="absolute left-[-5px] top-1 w-2 h-2 rounded-full bg-[var(--foreground-muted)]" />
+              <div className="text-sm text-[var(--foreground-muted)] mb-1">
+                2015 - 2019
+              </div>
+              <div className="flex items-center gap-3 mb-1">
+                <a
+                  href="https://www.caldwell.edu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium inline-flex items-center gap-2 hover:text-[var(--color-accent)] transition-colors cursor-pointer"
+                >
+                  Caldwell University
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                </a>
+              </div>
+              <p className="text-sm text-[var(--foreground-muted)]">
+                Bachelor in Science, Computer Information Systems (Minor: Mathematics)
+              </p>
+            </div>
+          </div>
         </div>
       </Tabs>
     </div>

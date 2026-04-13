@@ -20,11 +20,11 @@ export default function ReadingPage() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
       <p className="text-[var(--foreground-muted)] mb-8">
-        This is mostly for future me. <br /> Anything insightful I read,
-        I&apos;ll try to summarize it in 5 sentences or less so that I can come
-        back to it to rejog my memory. My memory for save information has a
-        short TTL so coming back to this will be helpful.
-      </p>
+        This is mostly for future me. <br /> 
+        I&apos;ll try to summarize it in few sentences so that I can come
+        back to it to rejog my memory.
+        
+        </p>
 
       <Tabs tabs={["Books", "Articles"]}>
         {/* Books */}
