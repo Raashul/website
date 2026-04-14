@@ -18,7 +18,7 @@ export function Footer() {
             rel="noopener noreferrer"
             className="hover:text-[var(--foreground)] transition-colors"
           >
-            Twitter
+            X
           </a>
         </div>
       </div>

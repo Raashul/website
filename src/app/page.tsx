@@ -13,8 +13,8 @@ export default function Home() {
           <p>If you&apos;re new here, my goal is to get you to know me better than a 1 pager resume. </p>
 
           <p>
-            I&apos;m orginally from Nepal. <br/> 
-            I came to the <a href="/photos/about3.png" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">United States in 2015</a> for my undergrad <br/>
+            I&apos;m orginally from Nepal🇳🇵 <br/> 
+            I came to the <a href="/photos/about3.png" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">United States in 2015</a>  <br/>
             I&apos;m currently based in Arlington, Virginia <br/>
             I work in tech where I build software for an <a href="https://www.anratechnologies.com" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">aviation company</a> for my 9 to 5, but like to dabble on the side.
           </p>
@@ -23,8 +23,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mb-12">
-        <p className="text-[var(--foreground-muted)] leading-relaxed mb-4">
+      <div className="mb-10">
+        <p className="text-[var(--foreground-muted)] leading-relaxed">
           If you want to put a face to the name, here are a couple pics of me.
         </p>
         <div className="flex gap-6">
@@ -77,7 +77,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors"
             >
-              Twitter
+              X
             </a>{" "}
             <a
               href="https://github.com/Raashul/website"

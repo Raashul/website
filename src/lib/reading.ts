@@ -12,6 +12,16 @@ export interface ReadingEntry {
   content: string;
 }
 
+export interface PodcastEntry {
+  slug: string;
+  title: string;
+  episode: string;
+  tag: string | null;
+  description: string;
+  url: string;
+  thumbnail: string | null;
+}
+
 function getEntries(subdir: string): ReadingEntry[] {
   const dir = path.join(contentDir, subdir);
   if (!fs.existsSync(dir)) return [];
@@ -44,4 +54,28 @@ export function getBooks(): ReadingEntry[] {
 
 export function getArticles(): ReadingEntry[] {
   return getEntries("articles");
+}
+
+export function getPodcasts(): PodcastEntry[] {
+  const dir = path.join(contentDir, "podcasts");
+  if (!fs.existsSync(dir)) return [];
+
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".mdx"));
+
+  return files.map((filename) => {
+    const slug = filename.replace(/\.mdx$/, "");
+    const filePath = path.join(dir, filename);
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const { data } = matter(fileContent);
+
+    return {
+      slug,
+      title: data.title || slug,
+      episode: data.episode || "",
+      tag: data.tag || null,
+      description: data.description || "",
+      url: data.url || "",
+      thumbnail: data.thumbnail || null,
+    };
+  });
 }
