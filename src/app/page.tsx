@@ -3,7 +3,7 @@ export default function Home() {
     <div className="max-w-3xl mx-auto px-6 py-16 md:py-14">
       <div className="mb-12">
         <div className="space-y-5 text-base leading-relaxed text-[var(--foreground-muted)]">
-          <p>
+          {/* <p>
             Yes. This is a vibe coded website.  
           </p>
           <p>
@@ -11,7 +11,7 @@ export default function Home() {
           </p>
 
           <p>If you&apos;re new here, my goal is to get you to know me better than a 1 pager resume. </p>
-
+ */}
           <p>
             I&apos;m orginally from Nepal🇳🇵 <br/> 
             I came to the <a href="/photos/about3.png" target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline underline-offset-3 transition-colors">United States in 2015</a>  <br/>
