@@ -56,6 +56,18 @@ export function getArticles(): ReadingEntry[] {
   return getEntries("articles");
 }
 
+export interface CurrentlyReadingEntry {
+  title: string;
+  url: string | null;
+}
+
+export function getCurrentlyReading(): CurrentlyReadingEntry[] {
+  const filePath = path.join(contentDir, "currently-reading.json");
+  if (!fs.existsSync(filePath)) return [];
+  const raw = fs.readFileSync(filePath, "utf-8");
+  return JSON.parse(raw);
+}
+
 export function getPodcasts(): PodcastEntry[] {
   const dir = path.join(contentDir, "podcasts");
   if (!fs.existsSync(dir)) return [];

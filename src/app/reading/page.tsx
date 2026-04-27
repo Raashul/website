@@ -1,4 +1,4 @@
-import { getBooks, getArticles, getPodcasts } from "@/lib/reading";
+import { getBooks, getArticles, getPodcasts, getCurrentlyReading } from "@/lib/reading";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Tabs } from "@/components/tabs";
 import type { Metadata } from "next";
@@ -28,6 +28,7 @@ export default function ReadingPage() {
   const books = getBooks();
   const articles = getArticles();
   const podcasts = getPodcasts();
+  const currentlyReading = getCurrentlyReading();
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
@@ -39,12 +40,43 @@ export default function ReadingPage() {
       <Tabs tabs={["Books", "Articles", "Podcasts"]}>
         {/* Books */}
         <div>
-          {books.length === 0 ? (
+          {books.length === 0 && currentlyReading.length === 0 ? (
             <p className="text-center py-16 text-[var(--foreground-muted)]">
               No books added yet.
             </p>
           ) : (
             <div className="space-y-8">
+              {currentlyReading.map((book) => (
+                <div
+                  key={book.title}
+                  className="border-l-2 border-[var(--color-accent)] pl-5 py-1"
+                >
+                  <div className="mb-2">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[var(--color-accent)]/15 text-[var(--color-accent)]">
+                      Currently Reading
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {book.url ? (
+                      <a
+                        href={book.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium inline-flex items-center gap-2 hover:text-[var(--color-accent)] transition-colors"
+                      >
+                        {book.title}
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <polyline points="15 3 21 3 21 9" />
+                          <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
+                      </a>
+                    ) : (
+                      <h3 className="font-medium">{book.title}</h3>
+                    )}
+                  </div>
+                </div>
+              ))}
               {books.map((book) => (
                 <div
                   key={book.slug}
