@@ -1,0 +1,12 @@
+---
+title: "An AI Agent Just Destroyed Our Production Data. It Confessed in Writing."
+url: "https://x.com/lifeof_jer/status/2048103471019434248"
+date: "2026-04-01"
+---
+
+One of SAAS company using Cursor and Claude Opus 4.6 deleted a production database when it was supposed to be a "routine task" in its staging environment.
+Apparently, after getting a "credential mismatch", it went hunting to find another API token in the codebase at which it found a token completely unrelated to original task, used it to run a CURL (without permission) which took down the database.
+It a mix of AI agent doing its own mystery hunt, running a bash command without approval and also Railway which had a faulty configuration in how its backup volumes are stored and how API tokens are not scope based.
+
+Ultimately, I guarentee these things will happen again. But who do we blame? AI for messing up? twitter junkies who are artificially hyping these tools as if they've found God? or our expectation thinking AI never reaches the dumb zone? or the engineer?
+I guess everyone shares the blame to some extent. However, 1 thing is for sure - coding is not dead.

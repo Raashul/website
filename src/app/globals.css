@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-cream: #FAF8F5;
   --color-warm-white: #F5F2ED;
