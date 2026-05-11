@@ -26,7 +26,7 @@ function getPodcastTagColor(tag: string): string {
 
 export default function ReadingPage() {
   const books = getBooks();
-  const articles = getArticles();
+  //const articles = getArticles();
   const podcasts = getPodcasts();
   const currentlyReading = getCurrentlyReading();
 
@@ -37,7 +37,7 @@ export default function ReadingPage() {
         Someone might find it useful. Who knows 
         </p>
 
-      <Tabs tabs={["Books", "Articles", "Podcasts"]}>
+      <Tabs tabs={["Books", "Podcasts"]}>
         {/* Books */}
         <div>
           {books.length === 0 && currentlyReading.length === 0 ? (
@@ -114,7 +114,7 @@ export default function ReadingPage() {
         </div>
 
         {/* Articles */}
-        <div>
+        {/* <div>
           {articles.length === 0 ? (
             <p className="text-center py-16 text-[var(--foreground-muted)]">
               No articles or links saved yet.
@@ -155,7 +155,7 @@ export default function ReadingPage() {
               ))}
             </div>
           )}
-        </div>
+        </div> */}
 
         {/* Podcasts */}
         <div>
