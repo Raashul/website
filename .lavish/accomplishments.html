@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accomplishments – Rashul Rajbhandari</title>
+
+  <!-- Fonts matching the site -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-cream: #FAF8F5;
+      --color-warm-white: #F5F2ED;
+      --color-charcoal: #2C2C2C;
+      --color-charcoal-light: #4A4A4A;
+      --color-stone: #8C8580;
+      --color-stone-light: #B8B2AA;
+      --color-accent: #C17F59;
+      --color-accent-hover: #A86B48;
+      --border: #E5E0DA;
+      --surface: #F5F2ED;
+      --background: #FAF8F5;
+      --foreground: #2C2C2C;
+      --foreground-muted: #8C8580;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .serif { font-family: 'Instrument Serif', Georgia, serif; }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Header ── */
+    .page-header {
+      margin-bottom: 48px;
+    }
+
+    .page-header h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      color: var(--foreground-muted);
+      font-size: 0.95rem;
+      max-width: 52ch;
+    }
+
+    /* ── Stats row ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 52px;
+    }
+
+    .stat-cell {
+      background: var(--surface);
+      padding: 20px 22px;
+    }
+
+    .stat-value {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 2rem;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--foreground-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 52px;
+    }
+
+    .section-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      border-left: 2px solid var(--border);
+      margin-left: 6px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 32px 28px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -5px;
+      top: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--foreground-muted);
+    }
+
+    .timeline-dot.accent {
+      background: var(--color-accent);
+      width: 10px;
+      height: 10px;
+      left: -6px;
+      top: 5px;
+    }
+
+    .timeline-period {
+      font-size: 0.8rem;
+      color: var(--foreground-muted);
+      margin-bottom: 4px;
+    }
+
+    .timeline-title {
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+
+    .timeline-org {
+      font-size: 0.85rem;
+      color: var(--color-accent);
+      margin-bottom: 6px;
+    }
+
+    .timeline-desc {
+      font-size: 0.875rem;
+      color: var(--foreground-muted);
+      line-height: 1.65;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--foreground-muted);
+    }
+
+    /* ── Highlights grid ── */
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .highlight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+
+    .highlight-card .icon {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .highlight-card h3 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .highlight-card p {
+      font-size: 0.82rem;
+      color: var(--foreground-muted);
+      line-height: 1.55;
+    }
+
+    /* ── Awards / recognition ── */
+    .award-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .award-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .award-year {
+      flex-shrink: 0;
+      font-size: 0.78rem;
+      color: var(--foreground-muted);
+      padding-top: 2px;
+      width: 36px;
+    }
+
+    .award-body h4 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .award-body p {
+      font-size: 0.82rem;
+      color: var(--foreground-muted);
+    }
+
+    /* ── Divider ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 52px;
+    }
+
+    /* ── Annotation highlight helper (lavish uses this) ── */
+    [data-annotation-target] {
+      cursor: pointer;
+      transition: outline 0.15s;
+    }
+    [data-annotation-target]:hover {
+      outline: 2px dashed var(--color-accent);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 540px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .highlight-grid { grid-template-columns: 1fr; }
+      .page-header h1 { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ── Page header ── -->
+    <header class="page-header" data-annotation-target>
+      <h1 class="serif">Accomplishments</h1>
+      <p>Not a résumé. More like a paper trail — things I built, shipped, broke, and occasionally got right.</p>
+    </header>
+
+    <!-- ── Stats row ── -->
+    <div class="stats-row" data-annotation-target>
+      <div class="stat-cell">
+        <div class="stat-value">7+</div>
+        <div class="stat-label">Years in the industry</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value">10+</div>
+        <div class="stat-label">Projects shipped</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value">100k+</div>
+        <div class="stat-label">Users impacted</div>
+      </div>
+    </div>
+
+    <!-- ── Career timeline ── -->
+    <section class="section">
+      <h2 class="section-title serif" data-annotation-target>Career</h2>
+
+      <div class="timeline" data-annotation-target>
+
+        <div class="timeline-item">
+          <div class="timeline-dot accent"></div>
+          <div class="timeline-period">2024 – Present</div>
+          <div class="timeline-title">Software Architect</div>
+          <div class="timeline-org">ANRA Technologies</div>
+          <p class="timeline-desc">
+            Took the UTM platform from paper design to live production — now powering drone traffic management for operators including Amazon and DoorDash. Own the architecture end-to-end across a system where correctness is not optional.
+          </p>
+          <div class="timeline-tags">
+            <span class="tag">Aviation</span>
+            <span class="tag">UAS / UTM</span>
+            <span class="tag">Architecture</span>
+            <span class="tag">Amazon · DoorDash</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-period">2022 – 2024</div>
+          <div class="timeline-title">Graduate Research / Engineering</div>
+          <div class="timeline-org">George Mason University</div>
+          <p class="timeline-desc">
+            Pursued an MS in Computer Science while working on applied research projects. Deep-dived into systems, algorithms, and practical software engineering.
+          </p>
+          <div class="timeline-tags">
+            <span class="tag">Research</span>
+            <span class="tag">Systems</span>
+            <span class="tag">MS Computer Science</span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-period">2019 – 2022</div>
+          <div class="timeline-title">Early Career Roles</div>
+          <div class="timeline-org">Various</div>
+          <p class="timeline-desc">
+            Gained early professional experience across different engineering roles — building products, shipping features, and learning what it means to own a system in production.
+          </p>
+          <div class="timeline-tags">
+            <span class="tag">Engineering</span>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+    <!-- ── Key highlights ── -->
+    <section class="section">
+      <h2 class="section-title serif" data-annotation-target>Highlights</h2>
+
+      <div class="highlight-grid" data-annotation-target>
+        <div class="highlight-card">
+          <div class="icon">✈️</div>
+          <h3>Aviation-grade software</h3>
+          <p>Building UTM platforms used by regulators and drone operators — software where reliability actually matters.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon">🎓</div>
+          <h3>MS in Computer Science</h3>
+          <p>George Mason University, 2024. Studied systems, distributed computing, and applied algorithms at graduate level.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon">🌍</div>
+          <h3>Nepal → Arlington</h3>
+          <p>Moved to the US at 18, earned two degrees, and built a career in software engineering from scratch.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon">🛠️</div>
+          <h3>Side projects</h3>
+          <p>Side projects used by 10,000+ people in total. Building things that actually get used turns out to be the best feedback loop.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Recognition / Awards ── -->
+    <section class="section">
+      <h2 class="section-title serif" data-annotation-target>Recognition</h2>
+
+      <div class="award-list" data-annotation-target>
+        <div class="award-item">
+          <div class="award-year">2024</div>
+          <div class="award-body">
+            <h4>Dean's List</h4>
+            <p>George Mason University — recognized for academic excellence during graduate studies.</p>
+          </div>
+        </div>
+        <div class="award-item">
+          <div class="award-year">—</div>
+          <div class="award-body">
+            <h4>Add your own here</h4>
+            <p>Any awards, publications, certifications, or other recognition you'd like to highlight.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
