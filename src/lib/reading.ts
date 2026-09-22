@@ -9,6 +9,8 @@ export interface ReadingEntry {
   title: string;
   url: string | null;
   date: string;
+  cover: string | null;
+  recommend: boolean;
   content: string;
 }
 
@@ -39,6 +41,8 @@ function getEntries(subdir: string): ReadingEntry[] {
       title: data.title || slug,
       url: data.url || null,
       date: data.date || "",
+      cover: data.cover || null,
+      recommend: data.recommend === true,
       content,
     };
   });
@@ -59,12 +63,14 @@ export function getArticles(): ReadingEntry[] {
 export interface CurrentlyReadingEntry {
   title: string;
   url: string | null;
+  cover: string | null;
 }
 
-export function getCurrentlyReading(): CurrentlyReadingEntry[] {
+export function getCurrentlyReading(): CurrentlyReadingEntry | null {
   const filePath = path.join(contentDir, "currently-reading.json");
-  if (!fs.existsSync(filePath)) return [];
-  const raw = fs.readFileSync(filePath, "utf-8");
+  if (!fs.existsSync(filePath)) return null;
+  const raw = fs.readFileSync(filePath, "utf-8").trim();
+  if (!raw) return null;
   return JSON.parse(raw);
 }
 

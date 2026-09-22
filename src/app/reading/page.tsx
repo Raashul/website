@@ -1,17 +1,13 @@
-import { getBooks, getArticles, getPodcasts, getCurrentlyReading } from "@/lib/reading";
+import { getBooks, getPodcasts, getCurrentlyReading } from "@/lib/reading";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Tabs } from "@/components/tabs";
+import { BookGallery, type GalleryBook } from "@/components/reading/book-gallery";
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Reading",
 };
-
-function formatDate(dateStr: string) {
-  const d = new Date(dateStr);
-  const quarter = Math.ceil((d.getMonth() + 1) / 3);
-  return `Q${quarter} ${d.getFullYear()}`;
-}
 
 function getPodcastTagColor(tag: string): string {
   const colors: Record<string, string> = {
@@ -26,91 +22,40 @@ function getPodcastTagColor(tag: string): string {
 
 export default function ReadingPage() {
   const books = getBooks();
-  //const articles = getArticles();
   const podcasts = getPodcasts();
   const currentlyReading = getCurrentlyReading();
 
+  const galleryBooks: GalleryBook[] = books.map((book) => ({
+    slug: book.slug,
+    title: book.title,
+    url: book.url,
+    date: book.date,
+    cover: book.cover,
+    recommend: book.recommend,
+  }));
+
+  const reviewContent: Record<string, ReactNode> = Object.fromEntries(
+    books.map((book) => [book.slug, <MDXRemote key={book.slug} source={book.content} />])
+  );
+
   return (
-    <div className="max-w-3xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-6 py-10">
+      <h1 className="font-serif text-3xl md:text-4xl tracking-tight mb-2">
+        Reading
+      </h1>
       <p className="text-[var(--foreground-muted)] mb-8">
-        Digital bookmarks for myself. 
-        Someone might find it useful. Who knows 
+        Digital bookmarks for myself.
+        Someone might find it useful. Who knows
         </p>
 
       <Tabs tabs={["Books", "Podcasts"]}>
         {/* Books */}
         <div>
-          {books.length === 0 && currentlyReading.length === 0 ? (
-            <p className="text-center py-16 text-[var(--foreground-muted)]">
-              No books added yet.
-            </p>
-          ) : (
-            <div className="space-y-8">
-              {currentlyReading.map((book) => (
-                <div
-                  key={book.title}
-                  className="border-l-2 border-[var(--color-accent)] pl-5 py-1"
-                >
-                  <div className="mb-2">
-                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-[var(--color-accent)]/15 text-[var(--color-accent)]">
-                      Currently Reading
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {book.url ? (
-                      <a
-                        href={book.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium inline-flex items-center gap-2 hover:text-[var(--color-accent)] transition-colors"
-                      >
-                        {book.title}
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                          <polyline points="15 3 21 3 21 9" />
-                          <line x1="10" y1="14" x2="21" y2="3" />
-                        </svg>
-                      </a>
-                    ) : (
-                      <h3 className="font-medium">{book.title}</h3>
-                    )}
-                  </div>
-                </div>
-              ))}
-              {books.map((book) => (
-                <div
-                  key={book.slug}
-                  className="border-l-2 border-[var(--border)] pl-5 py-1"
-                >
-                  <div className="text-xs text-[var(--foreground-muted)] mb-1">
-                    {formatDate(book.date)}
-                  </div>
-                  <div className="flex items-center gap-2 mb-2">
-                    {book.url ? (
-                      <a
-                        href={book.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium inline-flex items-center gap-2 hover:text-[var(--color-accent)] transition-colors"
-                      >
-                        {book.title}
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                          <polyline points="15 3 21 3 21 9" />
-                          <line x1="10" y1="14" x2="21" y2="3" />
-                        </svg>
-                      </a>
-                    ) : (
-                      <h3 className="font-medium">{book.title}</h3>
-                    )}
-                  </div>
-                  <div className="prose text-sm text-[var(--foreground-muted)] leading-relaxed">
-                    <MDXRemote source={book.content} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <BookGallery
+            books={galleryBooks}
+            currentlyReading={currentlyReading}
+            reviewContent={reviewContent}
+          />
         </div>
 
         {/* Articles */}
@@ -158,7 +103,9 @@ export default function ReadingPage() {
         </div> */}
 
         {/* Podcasts */}
-        <div>
+        {/* 45rem, not max-w-3xl: the original measure was max-w-3xl minus the
+            page's px-6 gutters, which the outer container still applies. */}
+        <div className="max-w-[45rem]">
           {podcasts.length === 0 ? (
             <p className="text-center py-16 text-[var(--foreground-muted)]">
               No podcasts added yet.
