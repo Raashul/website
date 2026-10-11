@@ -46,6 +46,14 @@ test("briefing sidebar lists past days and switches the viewed day", async ({ pa
   await expect(page.getByRole("heading", { level: 1 })).not.toContainText("October 11");
 });
 
+test("generate endpoint rejects unauthenticated requests", async ({ request }) => {
+  const response = await request.post("/api/briefing/generate", {
+    data: { date: "2026-10-12", generatedAt: "2026-10-12T12:00:00.000Z", items: [] },
+  });
+
+  expect(response.status()).toBe(401);
+});
+
 test("briefing page renders without console errors", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (msg) => {

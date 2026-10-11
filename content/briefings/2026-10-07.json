@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-07",
+  "generatedAt": "2026-10-07T12:01:00.000Z",
+  "items": [
+    {
+      "id": "2026-10-07-ai-open-weights",
+      "topic": "ai",
+      "title": "Startup releases open-weight model that rivals closed frontier systems",
+      "summary": "A well-funded startup published the weights for a model it claims matches last year's closed frontier systems on reasoning benchmarks. The permissive license lets companies fine-tune and self-host without usage fees. Rivals dismissed the benchmark scores as cherry-picked while enterprises rushed to test it.",
+      "source": {
+        "name": "The Information",
+        "url": "https://www.theinformation.com/"
+      }
+    },
+    {
+      "id": "2026-10-07-tech-antitrust-ruling",
+      "topic": "technology",
+      "title": "Appeals court narrows landmark antitrust remedy against app store",
+      "summary": "An appeals court trimmed the sweeping remedies ordered against a dominant app store, sparing the company a forced breakup. It left intact rules requiring support for third-party payment links. Developers called the decision a partial win that still leaves core commissions untouched.",
+      "source": {
+        "name": "TechCrunch",
+        "url": "https://techcrunch.com/"
+      }
+    },
+    {
+      "id": "2026-10-07-stocks-jobs-report",
+      "topic": "us-stocks",
+      "title": "Markets slip as a hot jobs report dims near-term rate-cut hopes",
+      "summary": "Equities pulled back after payrolls came in far above forecasts, pushing traders to reprice the odds of a cut this quarter. Financials outperformed on firmer yields while homebuilders sagged. The dollar strengthened against most major currencies.",
+      "source": {
+        "name": "Bloomberg",
+        "url": "https://www.bloomberg.com/markets"
+      }
+    },
+    {
+      "id": "2026-10-07-stocks-ipo-pipeline",
+      "topic": "us-stocks",
+      "title": "A crowded IPO pipeline tests investor appetite for new listings",
+      "summary": "Several venture-backed companies set terms for offerings this month, the busiest stretch for new listings in two years. Bankers say demand hinges on whether the first few deals hold their opening price. A weak debut could push the rest to delay.",
+      "source": {
+        "name": "Bloomberg",
+        "url": "https://www.bloomberg.com/markets"
+      }
+    },
+    {
+      "id": "2026-10-07-epl-transfer-window",
+      "topic": "epl",
+      "title": "Promoted side stuns early leaders with a late winner",
+      "summary": "A newly promoted club took three points off one of the early-season front-runners thanks to a stoppage-time strike. The result leaves the title favorites with a surprise early gap to close. The winning manager praised a game plan built around rapid counterattacks.",
+      "source": {
+        "name": "BBC Sport",
+        "url": "https://www.bbc.com/sport/football/premier-league"
+      }
+    },
+    {
+      "id": "2026-10-07-arlington-schools-budget",
+      "topic": "arlington",
+      "title": "School board weighs budget pressures as enrollment shifts",
+      "summary": "The county school board opened hearings on a budget strained by rising staff costs and uneven enrollment across neighborhoods. Administrators floated boundary adjustments to balance crowded and under-filled schools. Parents packed the meeting to object to any redistricting.",
+      "source": {
+        "name": "ARLnow",
+        "url": "https://www.arlnow.com/"
+      }
+    }
+  ]
+}
