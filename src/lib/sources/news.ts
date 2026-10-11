@@ -11,18 +11,54 @@ interface RawItem {
   sourceUrl?: unknown;
 }
 
-// Keep only URLs the model actually grounded in its web results; fall back to
-// the first citation when it invented one, so hallucinated links never ship.
-function resolveUrl(candidate: string, annotations: Annotation[]): string | null {
-  if (annotations.some((a) => a.url === candidate)) return candidate;
-  return annotations[0]?.url ?? null;
+// Prompting alone still lets lookalike/aggregator domains through, so links
+// are also restricted to known outlets in code.
+const ALLOWED_HOSTS = [
+  "reuters.com", "apnews.com", "bloomberg.com", "wsj.com", "ft.com", "cnbc.com", "nytimes.com",
+  "washingtonpost.com", "theverge.com", "arstechnica.com", "techcrunch.com", "wired.com",
+  "axios.com", "npr.org", "bbc.com", "bbc.co.uk", "cnn.com", "forbes.com", "fortune.com",
+  "barrons.com", "marketwatch.com", "finance.yahoo.com", "theinformation.com", "technologyreview.com",
+  "engadget.com", "zdnet.com", "venturebeat.com", "semafor.com", "politico.com", "theguardian.com",
+  "businessinsider.com", "investopedia.com", "nasdaq.com", "seekingalpha.com", "cnet.com",
+];
+
+function isAllowedHost(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return ALLOWED_HOSTS.some((h) => host === h || host.endsWith(`.${h}`));
+  } catch {
+    return false;
+  }
 }
+
+// A link ships only if the model's own sourceUrl was grounded in its web
+// results and is from an allowed outlet. No fallback to another citation: that
+// would attach an unrelated article to the story.
+function isShippable(url: string, annotations: Annotation[]): boolean {
+  return isAllowedHost(url) && annotations.some((a) => a.url === url);
+}
+
+// Distinct scopes keep Technology and AI from returning the same stories.
+const TOPIC_SCOPE: Record<NewsTopic, string> = {
+  technology:
+    "consumer and enterprise technology, semiconductors, cybersecurity, and big-tech business news. " +
+    "Exclude stories primarily about AI models or AI companies (those belong to a separate AI section)",
+  ai: "AI models, AI research, AI products, and AI policy",
+  "us-stocks": "US equity markets: index moves, notable earnings, and the macro news driving them",
+};
+
+const MAX_ITEMS = 2;
+
+const REPUTABLE_SOURCES =
+  "Prefer original reporting from reputable outlets (e.g. Reuters, AP, Bloomberg, WSJ, FT, CNBC, NYT, " +
+  "The Verge, Ars Technica, TechCrunch, Wired). Avoid content farms, aggregators, and press-release mirrors.";
 
 export async function fetchTopicNews(topic: NewsTopic, date: string): Promise<BriefingItem[]> {
   const label = TOPIC_META[topic].label;
   try {
     const { data, annotations } = await openrouterJSON({
       online: true,
+      includeDomains: ALLOWED_HOSTS,
       messages: [
         {
           role: "system",
@@ -34,7 +70,8 @@ export async function fetchTopicNews(topic: NewsTopic, date: string): Promise<Br
         {
           role: "user",
           content:
-            `Give the 1-2 most important and RECENT (within the last ~3 days) US-relevant ${label} stories. ` +
+            `Give up to 4 important and RECENT (within the last ~3 days) US-relevant ${label} stories, most important first, ` +
+            `covering ${TOPIC_SCOPE[topic]}. ${REPUTABLE_SOURCES} ` +
             `Each summary should be 2-3 sentences. Today is ${date}.`,
         },
       ],
@@ -49,8 +86,8 @@ export async function fetchTopicNews(topic: NewsTopic, date: string): Promise<Br
       if (typeof r.title !== "string" || typeof r.summary !== "string") return;
       if (typeof r.sourceUrl !== "string") return;
 
-      const url = resolveUrl(r.sourceUrl, annotations);
-      if (!url) return;
+      const url = r.sourceUrl;
+      if (!isShippable(url, annotations)) return;
 
       items.push({
         id: `${date}-${topic}-${index}`,
@@ -64,7 +101,7 @@ export async function fetchTopicNews(topic: NewsTopic, date: string): Promise<Br
       });
     });
 
-    return items;
+    return items.slice(0, MAX_ITEMS);
   } catch (err) {
     console.error(`[news:${topic}] failed: ${(err as Error).message}`);
     return [];

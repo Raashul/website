@@ -65,3 +65,18 @@ Generated files land in `content/briefings/`; don't commit real-data days.
 3. `vercel.json` runs the generator daily at 11:00 UTC (6 AM EST / 7 AM EDT), so it
    is ready by 8 AM ET year-round. Vercel sends `Authorization: Bearer $CRON_SECRET`.
    `BRIEFING_GENERATE_SECRET` is also accepted for manual triggers.
+
+### Chat
+
+Each story has an **Ask** button backed by `POST /api/briefing/chat`. The server looks
+up the item by `{date, itemId}` (the client never supplies a URL), fetches the source
+article live (public http(s) hosts only, 8s timeout), and streams a grounded answer from
+OpenRouter. If the article can't be fetched (paywall, blocked, JS-only), it falls back to
+the stored summary and says so.
+
+Guardrails (`src/lib/chat-limits.ts`): 10 questions per IP per 10 minutes and a daily cap
+(`CHAT_DAILY_LIMIT`, default 300). These are in-memory per serverless instance, so they
+bound abuse and cost but are not a global guarantee.
+
+News sourcing (`src/lib/sources/news.ts`) restricts web search to an allowlist of outlets
+(`ALLOWED_HOSTS`) and drops any link outside it or not grounded in the search results.

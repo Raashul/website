@@ -65,3 +65,50 @@ test("briefing page renders without console errors", async ({ page }) => {
 
   expect(errors, `Console/page errors found:\n${errors.join("\n")}`).toEqual([]);
 });
+
+test("Ask opens a chat that shows the streamed answer", async ({ page }) => {
+  let payload: Record<string, unknown> = {};
+  await page.route("**/api/briefing/chat", async (route) => {
+    payload = route.request().postDataJSON();
+    await route.fulfill({
+      status: 200,
+      contentType: "text/plain; charset=utf-8",
+      headers: { "X-Grounded": "article" },
+      body: "Mocked grounded answer.",
+    });
+  });
+  await page.goto("/briefing");
+
+  const article = page.getByRole("article").first();
+  await article.getByRole("button", { name: /Ask/ }).click();
+  await article.getByLabel("Ask a follow-up question").fill("Why does this matter?");
+  await article.getByRole("button", { name: "Send" }).click();
+
+  await expect(article.getByText("Mocked grounded answer.")).toBeVisible();
+  expect(payload.question).toBe("Why does this matter?");
+  expect(payload.date).toBe("2026-10-11");
+});
+
+test("chat shows an error message when the API rejects the question", async ({ page }) => {
+  await page.route("**/api/briefing/chat", (route) =>
+    route.fulfill({ status: 429, json: { error: "Too many questions. Please wait a few minutes." } }),
+  );
+  await page.goto("/briefing");
+
+  const article = page.getByRole("article").first();
+  await article.getByRole("button", { name: /Ask/ }).click();
+  await article.getByLabel("Ask a follow-up question").fill("Hello?");
+  await article.getByRole("button", { name: "Send" }).click();
+
+  await expect(article.getByRole("alert")).toContainText("Too many questions");
+});
+
+test("chat API validates input and unknown items", async ({ request }) => {
+  const bad = await request.post("/api/briefing/chat", { data: { date: "nope", itemId: "x", question: "hi" } });
+  expect(bad.status()).toBe(400);
+
+  const unknown = await request.post("/api/briefing/chat", {
+    data: { date: "2026-10-11", itemId: "does-not-exist", question: "hi" },
+  });
+  expect(unknown.status()).toBe(404);
+});

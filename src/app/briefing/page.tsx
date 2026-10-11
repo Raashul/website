@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BriefingChat } from "@/components/briefing-chat";
 import { getBriefing, getBriefingDates, TOPIC_META } from "@/lib/briefing";
 import type { Metadata } from "next";
 
@@ -132,13 +133,8 @@ export default async function BriefingPage(props: PageProps<"/briefing">) {
                       <line x1="10" y1="14" x2="21" y2="3" />
                     </svg>
                   </a>
-                  <span
-                    title="Chat connects in a later phase"
-                    className="text-sm text-[var(--foreground-muted)]/60 cursor-default select-none"
-                  >
-                    💬 Ask
-                  </span>
                 </div>
+                <BriefingChat date={briefing.date} itemId={item.id} />
               </article>
             );
           })}
