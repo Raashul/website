@@ -2,6 +2,7 @@ import "server-only";
 import { mkdir, readFile, readdir, writeFile } from "fs/promises";
 import path from "path";
 import { TOPICS, type Briefing, type BriefingItem, type Topic } from "@/lib/briefing";
+import { blobStore } from "@/lib/briefing-store-blob";
 
 export interface BriefingStore {
   listDates(): Promise<string[]>;
@@ -12,8 +13,8 @@ export interface BriefingStore {
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const FILE_PATTERN = /^(\d{4}-\d{2}-\d{2})\.json$/;
 
-// Dev-only backend. Vercel's filesystem is read-only at runtime, so a cloud
-// store (Blob/KV) implementing this same interface plugs in here for prod.
+// Dev/test backend. Vercel's filesystem is read-only at runtime, so prod uses
+// the Blob store (see briefing-store-blob.ts) behind the same interface.
 const BRIEFINGS_DIR = path.join(process.cwd(), "content", "briefings");
 
 const fileStore: BriefingStore = {
@@ -51,7 +52,7 @@ const fileStore: BriefingStore = {
 };
 
 export function getBriefingStore(): BriefingStore {
-  return fileStore;
+  return process.env.BLOB_READ_WRITE_TOKEN ? blobStore : fileStore;
 }
 
 function fail(message: string): never {

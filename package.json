@@ -12,6 +12,7 @@
     "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
+    "@vercel/blob": "^2.8.1",
     "gray-matter": "^4.0.3",
     "next": "16.2.3",
     "next-mdx-remote": "^6.0.0",

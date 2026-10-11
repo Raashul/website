@@ -4,14 +4,27 @@ import type { Topic } from "@/lib/briefing";
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
+// Generation fans out to several LLM/web sources; the default limit is too short.
+export const maxDuration = 300;
+
+// Vercel Cron invokes the path with GET; manual triggers (make brief) use POST.
+export async function GET(request: Request) {
+  return generate(request, new URL(request.url).searchParams.get("date"));
+}
+
 export async function POST(request: Request) {
-  const secret = process.env.BRIEFING_GENERATE_SECRET;
-  if (!secret || request.headers.get("Authorization") !== `Bearer ${secret}`) {
+  const body = await request.json().catch(() => ({}));
+  return generate(request, (body as { date?: unknown }).date);
+}
+
+async function generate(request: Request, requested: unknown) {
+  // CRON_SECRET: sent automatically by Vercel Cron. BRIEFING_GENERATE_SECRET: manual triggers.
+  const secrets = [process.env.CRON_SECRET, process.env.BRIEFING_GENERATE_SECRET].filter(Boolean);
+  const authorization = request.headers.get("Authorization");
+  if (!authorization || !secrets.some((secret) => authorization === `Bearer ${secret}`)) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const body = await request.json().catch(() => ({}));
-  const requested = (body as { date?: unknown }).date;
   const date =
     typeof requested === "string" && DATE_PATTERN.test(requested)
       ? requested
