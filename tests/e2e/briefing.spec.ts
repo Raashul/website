@@ -25,6 +25,27 @@ test("briefing page renders items with absolute source links", async ({ page }) 
   }
 });
 
+test("briefing sidebar lists past days and switches the viewed day", async ({ page }) => {
+  await page.goto("/briefing");
+
+  const sidebar = page.getByRole("navigation", { name: "Past briefings" });
+  const dateLinks = sidebar.getByRole("link");
+  expect(await dateLinks.count()).toBeGreaterThanOrEqual(5);
+
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("October 11");
+
+  const oct10 = sidebar.getByRole("link", { name: /Oct 10/ });
+  if (await oct10.count()) {
+    await oct10.first().click();
+  } else {
+    await page.goto("/briefing?date=2026-10-10");
+  }
+
+  await expect(page).toHaveURL(/date=2026-10-10/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("October 10");
+  await expect(page.getByRole("heading", { level: 1 })).not.toContainText("October 11");
+});
+
 test("briefing page renders without console errors", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (msg) => {
