@@ -34,9 +34,9 @@ test("the currently reading hero is not clickable and links straight to Amazon",
 
   const hero = page.locator("section").filter({ hasText: "Currently Reading" }).first();
   await expect(hero.getByRole("heading", { level: 2 })).toHaveText(
-    "The Wisdom of Crowds (James Surowiecki)"
+    "Thinking, Fast and Slow (Daniel Kahneman)"
   );
-  await expect(hero.locator("img")).toHaveAttribute("src", /the-wisdom-of-crowds/);
+  await expect(hero.locator("img")).toHaveAttribute("src", /thinking-fast-and-slow/);
 
   await expect(page.getByRole("button", { name: /Open details for/ })).toHaveCount(0);
   await expect(hero.getByRole("button")).toHaveCount(0);

@@ -27,6 +27,11 @@
   --foreground-muted: var(--color-stone);
   --surface: var(--color-warm-white);
   --border: #E5E0DA;
+  /* AA-contrast text tokens (stone/accent are < 4.5:1 on cream at small sizes) */
+  --foreground-body: #4A4A4A;
+  --foreground-strong-muted: #5E5750;
+  --accent-text: #9A5530;
+  --accent-surface: #F3E6DC;
 }
 
 /* Dark mode */
@@ -36,6 +41,10 @@
   --foreground-muted: var(--color-dark-text-muted);
   --surface: var(--color-dark-surface);
   --border: var(--color-dark-border);
+  --foreground-body: #D3CEC8;
+  --foreground-strong-muted: #B9B3AC;
+  --accent-text: #E0A27C;
+  --accent-surface: #2B2520;
 }
 
 body {

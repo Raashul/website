@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-09",
+  "generatedAt": "2026-10-09T11:59:00.000Z",
+  "items": [
+    {
+      "id": "2026-10-09-ai-enterprise-deals",
+      "topic": "ai",
+      "title": "Software giant bundles AI agents into its core suite at no extra cost",
+      "summary": "A major enterprise-software vendor said it would fold AI agents into its flagship suite rather than charge a separate add-on. The move pressures standalone AI startups that sell the same workflows. Analysts expect rivals to match the bundling within a quarter.",
+      "source": {
+        "name": "The Information",
+        "url": "https://www.theinformation.com/"
+      }
+    },
+    {
+      "id": "2026-10-09-tech-privacy-law",
+      "topic": "technology",
+      "title": "New state privacy law forces changes to ad-tracking defaults",
+      "summary": "A sweeping state privacy law took effect requiring opt-in consent before cross-site tracking. Large platforms rolled out new consent prompts to comply nationwide rather than per state. Advertisers are bracing for weaker targeting and higher acquisition costs.",
+      "source": {
+        "name": "TechCrunch",
+        "url": "https://techcrunch.com/"
+      }
+    },
+    {
+      "id": "2026-10-09-stocks-energy-rally",
+      "topic": "us-stocks",
+      "title": "Energy shares lead the market as crude jumps on supply fears",
+      "summary": "Oil majors rallied after a supply disruption pushed crude to a multi-month high. The move lifted the broader index even as rate-sensitive sectors lagged. Traders warned the gains could reverse quickly if the disruption proves short-lived.",
+      "source": {
+        "name": "Bloomberg",
+        "url": "https://www.bloomberg.com/markets"
+      }
+    },
+    {
+      "id": "2026-10-09-stocks-retail-sales",
+      "topic": "us-stocks",
+      "title": "Soft retail-sales data points to a cooling consumer",
+      "summary": "Retail sales came in below expectations, adding to signs that consumer spending is losing steam heading into the holidays. Discount chains held up better than discretionary retailers. Economists said the figures strengthen the case for a year-end rate cut.",
+      "source": {
+        "name": "Bloomberg",
+        "url": "https://www.bloomberg.com/markets"
+      }
+    },
+    {
+      "id": "2026-10-09-epl-injury-crisis",
+      "topic": "epl",
+      "title": "Title contender faces defensive crisis after international break",
+      "summary": "One of the title contenders returned from the international break with three defenders sidelined by injury. The manager hinted at reshuffling midfielders into the back line for the coming fixtures. The club is weighing an emergency loan before the registration deadline.",
+      "source": {
+        "name": "BBC Sport",
+        "url": "https://www.bbc.com/sport/football/premier-league"
+      }
+    },
+    {
+      "id": "2026-10-09-arlington-restaurant-scene",
+      "topic": "arlington",
+      "title": "Clarendon welcomes a wave of new restaurant openings",
+      "summary": "A cluster of restaurant openings is reshaping the dining scene in Clarendon, filling storefronts that had sat empty since the pandemic. Owners cited falling rents and renewed foot traffic as reasons to bet on the neighborhood. The county fast-tracked outdoor-seating permits to help.",
+      "source": {
+        "name": "ARLnow",
+        "url": "https://www.arlnow.com/"
+      }
+    }
+  ]
+}

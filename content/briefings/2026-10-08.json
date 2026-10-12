@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-08",
+  "generatedAt": "2026-10-08T12:03:00.000Z",
+  "items": [
+    {
+      "id": "2026-10-08-ai-agent-security",
+      "topic": "ai",
+      "title": "Researchers expose prompt-injection flaw across popular AI agents",
+      "summary": "Security researchers showed that hidden instructions in web pages could hijack several widely used AI browsing agents. The attack quietly exfiltrated data the agent had access to during a session. Vendors issued guidance to sandbox tool use while patches roll out.",
+      "source": {
+        "name": "TechCrunch",
+        "url": "https://techcrunch.com/"
+      }
+    },
+    {
+      "id": "2026-10-08-tech-datacenter-power",
+      "topic": "technology",
+      "title": "Utilities warn data-center demand is straining the grid",
+      "summary": "Regional utilities told regulators that clustered data-center projects are outpacing their ability to add transmission capacity. Some operators are signing deals for dedicated gas and nuclear power to avoid the queue. Consumer advocates worry the buildout will lift household rates.",
+      "source": {
+        "name": "Bloomberg",
+        "url": "https://www.bloomberg.com/markets"
+      }
+    },
+    {
+      "id": "2026-10-08-stocks-bank-earnings",
+      "topic": "us-stocks",
+      "title": "Big banks kick off earnings with resilient lending and soft trading",
+      "summary": "The largest banks reported steady net interest income but a pullback in trading revenue from a quiet quarter. Executives struck a cautious tone on loan losses tied to commercial real estate. Shares were mixed as investors parsed guidance on buybacks.",
+      "source": {
+        "name": "Bloomberg",
+        "url": "https://www.bloomberg.com/markets"
+      }
+    },
+    {
+      "id": "2026-10-08-ai-chip-roadmap",
+      "topic": "ai",
+      "title": "Chipmaker pulls forward next-gen accelerator to answer demand",
+      "summary": "A leading accelerator vendor said it would ship its next architecture months ahead of schedule as cloud providers lock in orders through next year. The new parts promise large gains in memory bandwidth for inference. Supply remains the gating factor despite the earlier date.",
+      "source": {
+        "name": "The Information",
+        "url": "https://www.theinformation.com/"
+      }
+    },
+    {
+      "id": "2026-10-08-epl-var-controversy",
+      "topic": "epl",
+      "title": "Disallowed goal reignites debate over video review",
+      "summary": "A tight offside call overturned a late equalizer and reopened the long-running argument over video review in the league. The losing manager said the delay drained the match of momentum. Officials defended the decision as technically correct if slow.",
+      "source": {
+        "name": "BBC Sport",
+        "url": "https://www.bbc.com/sport/football/premier-league"
+      }
+    },
+    {
+      "id": "2026-10-08-arlington-bike-lanes",
+      "topic": "arlington",
+      "title": "County opens a protected bike corridor through Rosslyn",
+      "summary": "Arlington cut the ribbon on a protected bike corridor connecting Rosslyn to neighboring commercial districts. Officials framed it as a link in a longer regional trail network. Some business owners worried about the loss of curbside parking during the transition.",
+      "source": {
+        "name": "ARLnow",
+        "url": "https://www.arlnow.com/"
+      }
+    }
+  ]
+}
