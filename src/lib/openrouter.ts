@@ -8,29 +8,14 @@ export interface OpenrouterMessage {
   content: string;
 }
 
-export interface Annotation {
-  url: string;
-  title?: string;
-}
-
 export async function openrouterJSON(opts: {
   messages: OpenrouterMessage[];
-  online?: boolean;
-  /** With `online`, restrict web results to these domains (web plugin). */
-  includeDomains?: string[];
   maxTokens?: number;
-}): Promise<{ data: unknown; annotations: Annotation[] }> {
+}): Promise<{ data: unknown }> {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) throw new Error("OPENROUTER_API_KEY is not set");
 
-  const baseModel = process.env.OPENROUTER_MODEL ?? DEFAULT_MODEL;
-  // The `:online` suffix can't carry options, so domain filtering uses the plugin form.
-  const useSuffix = opts.online && !opts.includeDomains;
-  const model = useSuffix ? `${baseModel}:online` : baseModel;
-  const plugins =
-    opts.online && opts.includeDomains
-      ? [{ id: "web", max_results: 8, include_domains: opts.includeDomains }]
-      : undefined;
+  const model = process.env.OPENROUTER_MODEL ?? DEFAULT_MODEL;
 
   const res = await fetch(ENDPOINT, {
     method: "POST",
@@ -43,7 +28,6 @@ export async function openrouterJSON(opts: {
       messages: opts.messages,
       max_tokens: opts.maxTokens ?? 1024,
       response_format: { type: "json_object" },
-      ...(plugins && { plugins }),
     }),
   });
 
@@ -53,11 +37,10 @@ export async function openrouterJSON(opts: {
   }
 
   const payload = (await res.json()) as {
-    choices?: { message?: { content?: string; annotations?: unknown } }[];
+    choices?: { message?: { content?: string } }[];
     usage?: { cost?: number };
   };
-  const message = payload.choices?.[0]?.message;
-  const content = message?.content ?? "";
+  const content = payload.choices?.[0]?.message?.content ?? "";
 
   let data: unknown;
   try {
@@ -66,21 +49,11 @@ export async function openrouterJSON(opts: {
     throw new Error(`OpenRouter returned non-JSON content: ${content.slice(0, 300)}`);
   }
 
-  const annotations: Annotation[] = Array.isArray(message?.annotations)
-    ? (message.annotations as unknown[])
-        .map((raw): Annotation | null => {
-          const a = raw as { type?: string; url_citation?: { url?: string; title?: string } };
-          if (a.type !== "url_citation" || typeof a.url_citation?.url !== "string") return null;
-          return { url: a.url_citation.url, title: a.url_citation.title };
-        })
-        .filter((a): a is Annotation => a !== null)
-    : [];
-
   if (typeof payload.usage?.cost === "number") {
     console.info(`[openrouter] model=${model} cost=$${payload.usage.cost}`);
   }
 
-  return { data, annotations };
+  return { data };
 }
 
 // Streams plain-text deltas from a chat completion. Throws before the first

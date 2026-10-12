@@ -62,32 +62,32 @@ export function BriefingChat({ date, itemId }: { date: string; itemId: string })
   }
 
   return (
-    <div className="mt-3">
+    <>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="text-sm text-[var(--foreground-muted)] hover:text-[var(--color-accent)] transition-colors"
+        className="font-medium text-[var(--accent-text)] hover:underline underline-offset-4"
       >
         💬 {open ? "Close" : "Ask"}
       </button>
 
       {open && (
-        <div className="mt-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
+        <div className="w-full basis-full rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
           {messages.length > 0 && (
             <div className="mb-3 space-y-3 text-sm leading-relaxed" aria-live="polite">
               {messages.map((m, i) => (
                 <p
                   key={i}
                   className={`whitespace-pre-wrap ${
-                    m.role === "user" ? "font-medium" : "text-[var(--foreground-muted)]"
+                    m.role === "user" ? "font-medium" : "text-[var(--foreground-body)]"
                   }`}
                 >
                   {m.content || (busy && i === messages.length - 1 ? "Thinking…" : "")}
                 </p>
               ))}
               {grounding === "summary" && (
-                <p className="text-xs text-[var(--foreground-muted)]">
+                <p className="text-xs text-[var(--foreground-strong-muted)]">
                   The article couldn&apos;t be fetched; answers use the summary only.
                 </p>
               )}
@@ -110,13 +110,13 @@ export function BriefingChat({ date, itemId }: { date: string; itemId: string })
             <button
               type="submit"
               disabled={busy || input.trim() === ""}
-              className="rounded-md px-3 py-1.5 text-sm text-[var(--color-accent)] border border-[var(--border)] disabled:opacity-50"
+              className="rounded-md px-3 py-1.5 text-sm text-[var(--accent-text)] border border-[var(--border)] disabled:opacity-50"
             >
               {busy ? "…" : "Send"}
             </button>
           </form>
         </div>
       )}
-    </div>
+    </>
   );
 }

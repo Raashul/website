@@ -30,10 +30,8 @@ function isPublicHttpUrl(raw: string): URL | null {
   return url;
 }
 
-function htmlToText(html: string): string {
+function stripTags(html: string): string {
   return html
-    .replace(/<(script|style|noscript|svg|nav|footer|header|aside|form)[\s\S]*?<\/\1>/gi, " ")
-    .replace(/<!--[\s\S]*?-->/g, " ")
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
@@ -43,6 +41,18 @@ function htmlToText(html: string): string {
     .replace(/&#0?39;|&apos;/g, "'")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+// Prefer the article's own paragraphs: whole-page text is mostly menus, related links and cookie banners.
+function htmlToText(html: string): string {
+  const body = html
+    .replace(/<(script|style|noscript|svg|nav|footer|header|aside|form)[\s\S]*?<\/\1>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ");
+  const scope = /<article[\s\S]*?<\/article>/i.exec(body)?.[0] ?? body;
+  const paragraphs = [...scope.matchAll(/<p[\s>][\s\S]*?<\/p>/gi)]
+    .map((m) => stripTags(m[0]))
+    .filter((p) => p.length >= 40);
+  return paragraphs.length >= 3 ? paragraphs.join("\n\n") : stripTags(body);
 }
 
 /** Fetches a page and returns its readable text, or null if unavailable. */

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BriefingChat } from "@/components/briefing-chat";
 import { getBriefing, getBriefingDates, TOPIC_META } from "@/lib/briefing";
+import type { BriefingItem, Topic } from "@/lib/briefing";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,6 +15,17 @@ const shortDate = (date: string) =>
     day: "numeric",
     timeZone: "UTC",
   });
+
+// Splits at the first sentence end that follows a lowercase letter/digit and leaves a
+// reasonably long lede, so "U.S." and similar abbreviations don't cut it short.
+function splitLede(summary: string): [string, string] {
+  const boundary = /[a-z0-9%)"”'’][.!?]["”’']?\s+(?=[A-Z0-9"“‘'])/g;
+  for (const match of summary.matchAll(boundary)) {
+    const end = match.index + match[0].trimEnd().length;
+    if (end >= 50) return [summary.slice(0, end), summary.slice(end).trim()];
+  }
+  return [summary, ""];
+}
 
 export default async function BriefingPage(props: PageProps<"/briefing">) {
   const { date } = await props.searchParams;
@@ -56,10 +68,17 @@ export default async function BriefingPage(props: PageProps<"/briefing">) {
     timeZoneName: "short",
   });
 
+  const groups: { topic: Topic; items: BriefingItem[] }[] = [];
+  for (const item of briefing.items) {
+    const group = groups.find((g) => g.topic === item.topic);
+    if (group) group.items.push(item);
+    else groups.push({ topic: item.topic, items: [item] });
+  }
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 md:grid md:grid-cols-[200px_1fr] md:gap-10">
       <nav aria-label="Past briefings" className="md:sticky md:top-20 self-start mb-8 md:mb-0">
-        <p className="text-xs font-medium uppercase tracking-widest text-[var(--color-accent)] mb-3">
+        <p className="text-xs font-semibold uppercase tracking-widest text-[var(--accent-text)] mb-3">
           Past briefings
         </p>
         <ul className="flex gap-2 overflow-x-auto md:flex-col md:overflow-visible">
@@ -72,13 +91,13 @@ export default async function BriefingPage(props: PageProps<"/briefing">) {
                   aria-current={active ? "page" : undefined}
                   className={`block whitespace-nowrap rounded-md px-3 py-1.5 text-sm transition-colors ${
                     active
-                      ? "bg-[var(--surface)] text-[var(--color-accent)]"
-                      : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                      ? "bg-[var(--surface)] text-[var(--accent-text)] font-medium"
+                      : "text-[var(--foreground-strong-muted)] hover:text-[var(--foreground)]"
                   }`}
                 >
                   {shortDate(d)}
                   {d === dates[0] && (
-                    <span className="ml-2 text-[0.625rem] uppercase tracking-wide text-[var(--foreground-muted)]">
+                    <span className="ml-2 text-[0.625rem] uppercase tracking-wide text-[var(--foreground-strong-muted)]">
                       Today
                     </span>
                   )}
@@ -90,55 +109,106 @@ export default async function BriefingPage(props: PageProps<"/briefing">) {
       </nav>
 
       <main className="min-w-0">
-        <header className="mb-10">
-          <p className="text-xs font-medium uppercase tracking-widest text-[var(--color-accent)] mb-2">
-            Your morning briefing
+        <header className="mb-8">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--accent-text)] mb-2">
+            Daily morning briefings
           </p>
-          <h1 className="font-serif text-3xl md:text-4xl tracking-tight">
+          <h1 className="font-serif text-4xl md:text-5xl tracking-tight">
             {dateLabel}
           </h1>
-          <p className="mt-2 text-sm text-[var(--foreground-muted)]">
+          <p className="mt-2 text-sm text-[var(--foreground-strong-muted)]">
             Delivered {deliveredLabel} · {briefing.items.length} stories
           </p>
         </header>
 
-        <div>
-          {briefing.items.map((item) => {
-            const meta = TOPIC_META[item.topic];
+        <nav aria-label="Topics" className="mb-4 flex flex-wrap gap-2">
+          {groups.map((group) => {
+            const meta = TOPIC_META[group.topic];
             return (
-              <article
-                key={item.id}
-                className="border-b border-[var(--border)] py-7 first:pt-0"
+              <a
+                key={group.topic}
+                href={`#topic-${group.topic}`}
+                className="rounded-full border border-[var(--border)] px-3 py-1 text-sm text-[var(--foreground-body)] hover:border-[var(--accent-text)] hover:text-[var(--accent-text)] transition-colors"
               >
-                <p className="text-xs font-medium uppercase tracking-wide text-[var(--color-accent)] mb-2">
-                  {meta.emoji} {meta.label}
-                </p>
-                <h2 className="font-serif text-xl md:text-2xl tracking-tight">
-                  {item.title}
-                </h2>
-                <p className="mt-2 text-[var(--foreground-muted)] leading-relaxed">
-                  {item.summary}
-                </p>
-                <div className="mt-3 flex items-center gap-4">
-                  <a
-                    href={item.source.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm inline-flex items-center gap-1.5 text-[var(--foreground-muted)] hover:text-[var(--color-accent)] transition-colors"
-                  >
-                    Read source · {item.source.name}
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                  </a>
-                </div>
-                <BriefingChat date={briefing.date} itemId={item.id} />
-              </article>
+                <span aria-hidden>{meta.emoji}</span> {meta.label}
+                <span className="ml-1 text-[var(--foreground-strong-muted)]">{group.items.length}</span>
+              </a>
             );
           })}
-        </div>
+        </nav>
+
+        <details className="group rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3">
+          <summary className="cursor-pointer text-xs font-semibold uppercase tracking-widest text-[var(--accent-text)]">
+            Today at a glance · {briefing.items.length} headlines
+          </summary>
+          <nav aria-label="Today's headlines" className="mt-3">
+            <ol className="space-y-0.5">
+              {briefing.items.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    className="flex gap-3 py-1 text-[0.9375rem] leading-snug hover:text-[var(--accent-text)] transition-colors"
+                  >
+                    <span aria-hidden className="w-5 shrink-0 text-center">
+                      {TOPIC_META[item.topic].emoji}
+                    </span>
+                    <span>{item.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </details>
+
+        {groups.map((group) => {
+          const meta = TOPIC_META[group.topic];
+          return (
+            <section key={group.topic} id={`topic-${group.topic}`} aria-label={meta.label} className="scroll-mt-24">
+              <h2 className="mt-8 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[var(--accent-text)] after:h-px after:flex-1 after:bg-[var(--border)]">
+                <span aria-hidden>{meta.emoji}</span> {meta.label}
+                <span className="font-normal normal-case tracking-normal text-[var(--foreground-strong-muted)]">
+                  · {group.items.length}
+                </span>
+              </h2>
+              {group.items.map((item) => {
+                const [lede, rest] = splitLede(item.summary);
+                return (
+                  <article
+                    key={item.id}
+                    id={item.id}
+                    className="scroll-mt-24 border-b border-[var(--border)] py-6 last:border-b-0"
+                  >
+                    <h3 className="max-w-[36ch] text-balance font-sans text-2xl font-bold leading-tight tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 max-w-[62ch] text-lg leading-relaxed">{lede}</p>
+                    {rest && (
+                      <p className="mt-3 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-[var(--foreground-body)]">
+                        {rest}
+                      </p>
+                    )}
+                    {item.whyItMatters && (
+                      <p className="mt-4 max-w-[62ch] rounded-lg bg-[var(--accent-surface)] px-4 py-3 text-[0.9375rem] leading-relaxed text-[var(--foreground-body)]">
+                        {item.whyItMatters}
+                      </p>
+                    )}
+                    <div className="mt-4 flex flex-wrap items-baseline gap-x-5 gap-y-3 text-sm">
+                      <a
+                        href={item.source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--foreground-strong-muted)] underline decoration-[var(--border)] underline-offset-4 hover:text-[var(--accent-text)] hover:decoration-current transition-colors"
+                      >
+                        Read source · {item.source.name}
+                      </a>
+                      <BriefingChat date={briefing.date} itemId={item.id} />
+                    </div>
+                  </article>
+                );
+              })}
+            </section>
+          );
+        })}
       </main>
     </div>
   );

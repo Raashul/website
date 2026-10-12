@@ -7,11 +7,11 @@ import { useState } from "react";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/briefing", label: "Briefing" },
   { href: "/reading", label: "Reading" },
   { href: "/working-on", label: "Working On" },
   { href: "/segments", label: "Segments" },
-  { href: "/blog", label: "Blog" },
+  { href: "/briefing", label: "Briefings" },
+  { href: "/blog", label: "Blog", comingSoon: true },
 ];
 
 export function Nav() {
@@ -35,19 +35,35 @@ export function Nav() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
-          {links.slice(1).map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                isActive(link.href)
-                  ? "text-[var(--foreground)] bg-[var(--surface)]"
-                  : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.slice(1).map((link) =>
+            link.comingSoon ? (
+              <span
+                key={link.href}
+                aria-disabled="true"
+                className="group relative px-3 py-1.5 text-sm rounded-md text-[var(--foreground-muted)] opacity-50 cursor-not-allowed"
+              >
+                {link.label}
+                <span
+                  role="tooltip"
+                  className="pointer-events-none absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 py-1 text-xs text-[var(--foreground)] opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  Coming Soon
+                </span>
+              </span>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+                  isActive(link.href)
+                    ? "text-[var(--foreground)] bg-[var(--surface)]"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
           <div className="ml-2">
             <ThemeToggle />
           </div>
@@ -90,20 +106,30 @@ export function Nav() {
       {mobileOpen && (
         <div className="md:hidden border-t border-[var(--border)] bg-[var(--background)]">
           <div className="px-6 py-4 flex flex-col gap-1">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className={`px-3 py-2 rounded-md text-sm transition-colors ${
-                  isActive(link.href)
-                    ? "text-[var(--foreground)] bg-[var(--surface)]"
-                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {links.map((link) =>
+              link.comingSoon ? (
+                <span
+                  key={link.href}
+                  aria-disabled="true"
+                  className="px-3 py-2 rounded-md text-sm text-[var(--foreground-muted)] opacity-50 cursor-not-allowed"
+                >
+                  {link.label} <span className="text-xs">(Coming Soon)</span>
+                </span>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`px-3 py-2 rounded-md text-sm transition-colors ${
+                    isActive(link.href)
+                      ? "text-[var(--foreground)] bg-[var(--surface)]"
+                      : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ),
+            )}
           </div>
         </div>
       )}

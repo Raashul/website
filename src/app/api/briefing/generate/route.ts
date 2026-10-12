@@ -19,7 +19,12 @@ export async function POST(request: Request) {
 
 async function generate(request: Request, requested: unknown) {
   // CRON_SECRET: sent automatically by Vercel Cron. BRIEFING_GENERATE_SECRET: manual triggers.
-  const secrets = [process.env.CRON_SECRET, process.env.BRIEFING_GENERATE_SECRET].filter(Boolean);
+  // Outside production, `local-dev` (the Makefile default) works with a plain `npm run dev`.
+  const secrets = [
+    process.env.CRON_SECRET,
+    process.env.BRIEFING_GENERATE_SECRET,
+    process.env.NODE_ENV === "production" ? undefined : "local-dev",
+  ].filter(Boolean);
   const authorization = request.headers.get("Authorization");
   if (!authorization || !secrets.some((secret) => authorization === `Bearer ${secret}`)) {
     return new Response("Unauthorized", { status: 401 });

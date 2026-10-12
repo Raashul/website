@@ -75,11 +75,16 @@ function parseItem(input: unknown, index: number): BriefingItem {
   if (typeof source.name !== "string") fail(`${at("source.name")} must be a string`);
   if (typeof source.url !== "string") fail(`${at("source.url")} must be a string`);
 
+  if (item.whyItMatters !== undefined && typeof item.whyItMatters !== "string") {
+    fail(`${at("whyItMatters")} must be a string`);
+  }
+
   return {
     id: item.id,
     topic: item.topic as Topic,
     title: item.title,
     summary: item.summary,
+    ...(item.whyItMatters !== undefined && { whyItMatters: item.whyItMatters }),
     source: { name: source.name, url: source.url },
   };
 }

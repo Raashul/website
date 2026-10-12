@@ -63,7 +63,6 @@ test("internal nav links navigate to the correct page", async ({ page }) => {
     { name: "Reading", path: "/reading" },
     { name: "Working On", path: "/working-on" },
     { name: "Segments", path: "/segments" },
-    { name: "Blog", path: "/blog" },
   ];
 
   for (const link of internalLinks) {
@@ -71,4 +70,15 @@ test("internal nav links navigate to the correct page", async ({ page }) => {
     await expect(page).toHaveURL(new RegExp(`${link.path}$`));
     await page.goBack();
   }
+});
+
+test("blog nav item is disabled and shows Coming Soon on hover", async ({ page }) => {
+  await page.goto("/");
+  const banner = page.getByRole("banner");
+
+  await expect(banner.getByRole("link", { name: "Blog" })).toHaveCount(0);
+  const blog = banner.locator('[aria-disabled="true"]', { hasText: "Blog" });
+  await blog.hover();
+  await expect(blog.getByRole("tooltip")).toHaveText("Coming Soon");
+  await expect(blog.getByRole("tooltip")).toHaveCSS("opacity", "1");
 });

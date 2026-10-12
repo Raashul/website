@@ -22,6 +22,8 @@ test("briefing page renders items with absolute source links", async ({ page }) 
   for (let i = 0; i < linkCount; i++) {
     const href = await sourceLinks.nth(i).getAttribute("href");
     expect(href).toMatch(/^https?:\/\//);
+    // A bare homepage or section root is the bug this guards against.
+    expect(new URL(href!).pathname.length, `${href} is not an article link`).toBeGreaterThan(1);
   }
 });
 
