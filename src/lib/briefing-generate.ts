@@ -15,7 +15,7 @@ const SECTIONS: StorySection[] = [
       { name: "TechCrunch", url: "https://techcrunch.com/category/artificial-intelligence/feed/" },
       { name: "MIT Technology Review", url: "https://www.technologyreview.com/feed/" },
       { name: "The Guardian", url: "https://www.theguardian.com/technology/artificialintelligenceai/rss" },
-      { name: "Ars Technica", url: "https://feeds.arstechnica.com/arstechnica/ai" },
+      { name: "Ars Technica", url: "https://arstechnica.com/ai/feed/" },
     ],
   },
   {
